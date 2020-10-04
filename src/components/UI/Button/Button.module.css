@@ -1,0 +1,42 @@
+.Button {
+    font: inherit;
+    text-transform: uppercase;
+    font-weight: bold;
+    outline: none;
+    margin: 10px 30px;
+    transition: 0.8s ease-in-out;
+    cursor: pointer;
+    border: none;
+    
+}
+ /*this method beolw is used to set both buttons side by side*/
+.Button:first-of-type{
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.Proceed {
+    color: rgb(199, 39, 39);
+   
+}
+
+.Proceed:hover {
+
+    transform: rotate(360deg);
+}
+
+.Return {
+
+    color: rgb(37, 185, 0);
+
+
+   
+
+}
+
+
+
+.Return:hover {
+
+    transform: rotate(-360deg);
+}
