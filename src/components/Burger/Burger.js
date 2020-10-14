@@ -7,6 +7,7 @@
 import React from 'react';
 import classes from './Burger.module.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
+//import { withRouter } from 'react-router-dom';
 
 const Burger = (props) => {
 	let transformedIngredient = Object.keys(props.ingredients)
@@ -39,3 +40,5 @@ const Burger = (props) => {
 };
 
 export default Burger;
+
+//export default withRouter(Burger);  if we do console.log(props) we can get match history location....

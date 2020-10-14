@@ -29,14 +29,19 @@ const INGREDIENT_PRICES = {
 
     componentDidMount(){
        console.log(this.props)
-        axios.get('https://react-burger-builder-39519.firebaseio.com/ingredients.json') //https://react-burger-builder-39519.firebaseio.com/
+        axios.get('https://react-burger-builder-39519.firebaseio.com/ingredients.json') //https://react-burger-builder-39519.firebaseio.com/ 
         .then(res => {
             this.setState({ingredients: res.data})
         }).catch(error => {
-            this.setState({error: true})
+            this.setState({ error: true})
         })
     }
-
+    // {
+    //     "rules": {
+    //       ".read": "now < 1601749800000",  // 2020-10-4
+    //       ".write": "now < 1601749800000",  // 2020-10-4
+    //     }
+    //   }
 
     updatePurchaseState = (ingredients) => {
       const order =   Object.keys(ingredients)
@@ -93,38 +98,11 @@ const INGREDIENT_PRICES = {
     };
 
     purchaseContinueHandler = () => {
-      // this.setState({loading : true}) // on clicking 
-      //  alert('You Proceed !!!!')
-    //   const order = {
-    //       ingredients : this.state.ingredients,
-    //       price : this.state.price,
-    //       customer : {
-    //           name: 'DANISH KHALQUE',
-    //           address : {
-                  
-    //               address : 'XXX ENCLAVE',
-    //               zipcode : '1100XX',
-    //               city : 'DELHI',
-    //               country : 'INDIA'  
-    //           },
-    //           email : 'khalique.danish@gmail.com'
-    //       },
-    //       deliveryMethod : 'fastest'
-    //   }
-
-
-    
-    //   axios.post('/orders.json'  , order)  // .json is required for firebase
-    //   .then(res => {  
-    //      this.setState({loading : false, purchasing : false}) // once we get response spinner should stop and MODAL close
-    //   }).catch(err => {
-    //       this.setState({loading : false, purchasing : false}) // even if unsucessful or error appears we should stop Spinner and Close the MODAL
-    //   }) 
-
     const queryParams = [];
     for( let i in this.state.ingredients) {
-        console.log(encodeURIComponent(i))
-        console.log(encodeURIComponent(this.state.ingredients[i]))
+     //   console.log(encodeURIComponent(i)) // name of ingredient
+     //   console.log(encodeURIComponent(this.state.ingredients[i])) // quantity of ingredient
+     
         queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i])) // i is the key like in Object.keys eg:=>  
                                         //  ["bacon=2", "cheese=1", "meat=1", "salad=1"]
                                         // 0: "bacon=2"
@@ -133,8 +111,8 @@ const INGREDIENT_PRICES = {
                                         // 3: "salad=1"
                                         // length: 4
     }
-    console.log(queryParams)
-    
+    //console.log(queryParams)
+    queryParams.push('price=' + this.state.price)
     const queryString = queryParams.join('&'); // &bacon=1&cheese=1&meat=1&salad=1
        
        this.props.history.push({
@@ -162,6 +140,7 @@ const INGREDIENT_PRICES = {
         
 
         let burger = this.state.error ? <p>INGREDIENTS NOT FOUND</p> : <Spinner />
+        
 
         if(this.state.ingredients){
 
