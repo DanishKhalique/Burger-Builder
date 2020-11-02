@@ -1,15 +1,17 @@
 .contact__data {
     display: flex;
     flex-direction: column;
-    margin: 10px auto;
+    margin: 20px auto;
     align-items: center;
-    padding: 10px;
+    padding: 20px;
     flex-wrap: nowrap;
-    width: 60%;
-    height: 400px;
+    width: 70%;
+    height: 700px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 3px #cccccc;
     box-sizing: border-box;
+    overflow: auto;
+
 
 }
 
@@ -17,11 +19,20 @@
     display: flex;
     flex-direction: column;
     height: inherit;
-    width: 30%;
     align-items: center;
     justify-content: space-around;
+    margin-bottom: 10px;
 
 
+}
+
+.input {
+    max-width: 100%;
+    outline: none;
+    border: 1px solid #cac6c6;
+    box-shadow: 0 2px 3px rgba(75, 72, 72, 0.933);
+    padding-top: 9px;
+    box-sizing: border-box;
 }
 
 
@@ -29,4 +40,11 @@
     .contact__data {
         width: 500px;
     }
+
+    .input {
+        width: 180%;
+        outline: none;
+        border: 1px solid #cac6c6;
+    }
+
 }
