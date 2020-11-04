@@ -4,42 +4,43 @@ import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import { Route } from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
+import { connect } from 'react-redux';
 
 class Checkout extends Component {
-	state = {
-		ingredients: null,
-		price : 0
-	};
+	
 
-	componentWillMount() {
-		const query = new URLSearchParams(this.props.location.search); //?bacon=1&cheese=1&meat=1&salad=1
-		const ingredients = {};
-		let price = 0;
-		for (let param of query.entries()) {
-			// ["bacon=2", "cheese=1", "meat=1", "salad=1"]
-			// 0: "bacon=2"
-			// 1: "cheese=1"
-			// 2: "meat=1"
-			// 3: "salad=1"
-			// length: 4
-		//	console.log(ingredients[param[0]]); // undefined but possibly name of food
-		//	console.log(param[1]); // quantity
+
+	/********************** QUERY PARAMS ************/
+	// componentWillMount() {
+	// 	const query = new URLSearchParams(this.props.location.search); //?bacon=1&cheese=1&meat=1&salad=1
+	// 	const ingredients = {};
+	// 	let price = 0;
+	// 	for (let param of query.entries()) {
+	// 		// ["bacon=2", "cheese=1", "meat=1", "salad=1"]
+	// 		// 0: "bacon=2"
+	// 		// 1: "cheese=1"
+	// 		// 2: "meat=1"
+	// 		// 3: "salad=1"
+	// 		// length: 4
+	// 	//	console.log(ingredients[param[0]]); // undefined but possibly name of food
+	// 	//	console.log(param[1]); // quantity
 		
-		if(param[0] === 'price'){
-			price= +param[1]
-		}else{
-			ingredients[param[0]] = +param[1]; // + used to convert it into a number
-			// {bacon: 2, cheese: 1, meat: 1, salad: 1}
-			// bacon: 2
-			// cheese: 1
-			// meat: 1
-			// salad: 1
-		}
+	// 	if(param[0] === 'price'){
+	// 		price= +param[1]
+	// 	}else{
+	// 		ingredients[param[0]] = +param[1]; // + used to convert it into a number
+	// 		// {bacon: 2, cheese: 1, meat: 1, salad: 1}
+	// 		// bacon: 2
+	// 		// cheese: 1
+	// 		// meat: 1
+	// 		// salad: 1
+	// 	}
 			
-		}
-		// console.log(ingredients);
-		this.setState({ ingredients: ingredients , price : price});
-	}
+	// 	}
+	// 	// console.log(ingredients);
+	// 	this.setState({ ingredients: ingredients , price : price});
+	// }
+	/*********************************************************** */
 
 	checkoutCancelHandler = () => {
 		this.props.history.goBack(); // this will simply go one page back the page as the name suggest
@@ -53,16 +54,24 @@ class Checkout extends Component {
 		return (
 			<div>
 				<CheckoutSummary
-					ingredients={this.state.ingredients}
+					ingredients={this.props.ings}
 					checkoutCancel={this.checkoutCancelHandler}
 					checkoutContinued={this.checkoutContinuedHandler}
 				/>
 				<Route path={this.props.match.path + '/contact-data'} 
-				 render= {(props) => (<ContactData ingredients={this.state.ingredients} price={this.state.price} {...props}/>)} />
+				 //render= {(props) => (<ContactData ingredients={this.state.ingredients} price={this.state.price} {...props}/>)}
+				 component={ContactData} />
+
 				
 			</div>
 		);
 	}
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+	return {
+		ings: state.ingredients
+	}
+}
+
+export default connect(mapStateToProps)(Checkout);
