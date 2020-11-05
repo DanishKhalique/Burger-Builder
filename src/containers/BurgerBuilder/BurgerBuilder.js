@@ -7,7 +7,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios from '../../axios-orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-import * as actionTypes from '../../store/actions'
+import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux'
 
 
@@ -19,19 +19,18 @@ import { connect } from 'react-redux'
         
        // purchasable : false, // this is linked to disabling the order button when order = 0
         purchasing: false,  // this is linked to the order summary pop up when Order button is clicked
-        loading : false,   // when it is TRUE --> SPINNER and when it is FALSE --> ORDER SUMMARY
-        error : false
+        
     }
 
 
     componentDidMount(){
+        this.props.oninitIngredients();
      //  console.log(this.props)
-        // axios.get('https://react-burger-builder-39519.firebaseio.com/ingredients.json') //https://react-burger-builder-39519.firebaseio.com/ 
-        // .then(res => {
-        //     this.setState({ingredients: res.data})
-        // }).catch(error => {
-        //     this.setState({ error: true})
-        // })
+     //axios.get('https://react-burger-builder-39519.firebaseio.com/ingredients.json') //https://react-burger-builder-39519.firebaseio.com/ 
+     // .then(res => {
+     //     this.setState({ingredients: res.data})
+     // }).catch(error => {
+     //     this.setState({ error: true})
     }
     // {
     //     "rules": {
@@ -85,6 +84,7 @@ import { connect } from 'react-redux'
     /******************************* */
 
     purchaseContinueHandler = () => {
+        this.props.onInitPurchase();
         this.props.history.push('/checkout')
     }
     
@@ -106,7 +106,7 @@ import { connect } from 'react-redux'
 
         
 
-        let burger = this.state.error ? <p>INGREDIENTS NOT FOUND</p> : <Spinner />
+        let burger = this.props.error ? <p>INGREDIENTS NOT FOUND</p> : <Spinner />
         
 
         if(this.props.ings){
@@ -159,15 +159,18 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error
     }
 }
     
 const mapDispatchToProps = (dispatch) => {
     return {
-        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
-        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
+        onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
+        onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
+        oninitIngredients: () => dispatch(actions.initIngredients()),
+        onInitPurchase: () => dispatch(actions.purchaseInit())
     }
 }
 
