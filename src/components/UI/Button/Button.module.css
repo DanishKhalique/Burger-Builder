@@ -4,7 +4,7 @@
     font-weight: bold;
     outline: none;
     margin: 10px 30px;
-    transition: 0.8s ease-in-out;
+    transition: 0.3s ease-in-out;
     cursor: pointer;
     border: none;
     
@@ -22,13 +22,13 @@
 
 .Proceed:hover {
 
-    transform: rotate(360deg);
+    color: red;
 }
 
 .Return {
 
-    color: rgb(37, 185, 0);
-
+  
+    color: green;
 
    
 
@@ -37,6 +37,6 @@
 
 
 .Return:hover {
-
-    transform: rotate(-360deg);
+    color: rgb(37, 185, 0);
+   
 }

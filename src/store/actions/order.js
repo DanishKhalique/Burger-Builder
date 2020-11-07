@@ -24,11 +24,11 @@ export const purchaseBurgerStart = () => {
 	};
 };
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
 	return (dispatch) => {
 		dispatch(purchaseBurgerStart());
 		axios
-			.post('/orders.json', orderData) // .json is required for firebase
+			.post('/orders.json?auth=' + token, orderData) // .json is required for firebase
 			.then((response) => {
 				console.log(`purchaseBurgerSuccess`, response.data);
 				dispatch(purchaseBurgerSuccess(response.data.name, orderData));
@@ -65,11 +65,15 @@ export const fetchOrdersStart = () => {
 }
 
 
-export const fetchOrder = () => {
+export const fetchOrder = (token, userId) => {
 	return dispatch => {
 		dispatch(fetchOrdersStart())
+		// orderBy is a FIREBASE KEYWORD 
+		// equalTo is a FIREBASE KEYWORD
+		// ".indexOn": ["userId"] on FIREBASE DATABASE RULES to filter data
+		const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
 		axios
-			.get('./orders.json')
+			.get('./orders.json' + queryParams)
 			.then((res) => {
 				const fetchedOrders = [];
 				for (let key in res.data) {
@@ -86,3 +90,5 @@ export const fetchOrder = () => {
 			});
 	}
 }
+
+

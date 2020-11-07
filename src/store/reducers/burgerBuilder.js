@@ -4,7 +4,8 @@ const initialState = {
 	ingredients: null,
 	totalPrice: 100,
 	//loading : false,   // when it is TRUE --> SPINNER and when it is FALSE --> ORDER SUMMARY
-    error : false
+	error : false,
+	building: false
 };
 
 const INGREDIENT_PRICES = {
@@ -23,7 +24,8 @@ const reducer = (state = initialState, action) => {
 					...state.ingredients,
 					[action.ingredientName]: state.ingredients[action.ingredientName] + 1
 				},
-				totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+				totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+				building: true
 			};
 		case actionTypes.REMOVE_INGREDIENT:
 			return {
@@ -32,14 +34,16 @@ const reducer = (state = initialState, action) => {
 					...state.ingredients,
 					[action.ingredientName]: state.ingredients[action.ingredientName] - 1
 				},
-				totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+				totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+				building: true
 			};
 			case actionTypes.SET_INGREDIENTS:
 				return{
 					...state,
 					ingredients : action.ingredients,
 					totalPrice: 100,
-					error: false
+					error: false,
+					building: false
 				}
 			case actionTypes.FETCH_INGREDIENTS_FAILED: 
 			return{
@@ -50,7 +54,7 @@ const reducer = (state = initialState, action) => {
 			return state;
 	}
 
-	return state;
+	
 };
 
 export default reducer;
