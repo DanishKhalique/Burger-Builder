@@ -33,7 +33,11 @@ export class Auth extends Component {
 				value: '',
 				validation: {
 					required: true,
+<<<<<<< HEAD
 					minLength: 6
+=======
+					minLength: 6,
+>>>>>>> master
 				},
 				valid: false,
 				touched: false

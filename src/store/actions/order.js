@@ -30,7 +30,7 @@ export const purchaseBurger = (orderData, token) => {
 		axios
 			.post('/orders.json?auth=' + token, orderData) // .json is required for firebase
 			.then((response) => {
-				console.log(`purchaseBurgerSuccess`, response.data);
+				//console.log(`purchaseBurgerSuccess`, response.data);
 				dispatch(purchaseBurgerSuccess(response.data.name, orderData));
 			})
 			.catch((error) => {
